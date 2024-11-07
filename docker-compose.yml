@@ -1,11 +1,12 @@
 version: "3.9"
 
 services:
-  go-chibi-app:
+  go-app:
     container_name: go-chibi-url
+    image: prk-dev/go-chibi-url:1.0.0
     build: .
     environment:
-      DATABASE_URL: "host:go_db user=postgres password=postgres dbname=postgress sslmode=disabled"
+      DATABASE_URL: "host=go_db user=postgres password=postgres dbname=postgres sslmode=disable"
     ports:
       - "8080:8000"
     depends_on:
