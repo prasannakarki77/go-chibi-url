@@ -17,6 +17,17 @@ type User struct {
 	Email string `json:"email"`
 }
 
+type URL struct {
+	ID           int    `json:"id"`
+	OriginalURL  string `json:"originalUrl"`
+	ShortenedURL string `json:"shortenedUrl"`
+}
+
+type URLInput struct {
+	OriginalURL string `json:"originalUrl`
+	Alias       string `json:"alias"`
+}
+
 func main() {
 	// connect to databases
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
@@ -25,6 +36,12 @@ func main() {
 	}
 	defer db.Close()
 	_, err = db.Exec("CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, name TEXT, email TEXT)")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_, err = db.Exec("CREATE TABLE IF NOT EXISTS urls(id SERIAL PRIMARY KEY, original_url TEXT NOT NULL, shortened_url TEXT UNIQUE NOT NULL)")
 
 	if err != nil {
 		log.Fatal(err)
