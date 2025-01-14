@@ -9,14 +9,22 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"time"
 
+	"github.com/golang-jwt/jwt/v5"
 	_ "github.com/lib/pq"
 )
 
 type User struct {
-	ID    int    `json:"id"`
-	Name  string `json:"name"`
-	Email string `json:"email"`
+	ID             int    `json:"id"`
+	Name           string `json:"name"`
+	Email          string `json:"email"`
+	HashedPassword string `json:"hashedPassword"`
+}
+
+type RegisterInput struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
 }
 
 type URL struct {
@@ -28,6 +36,41 @@ type URL struct {
 type URLInput struct {
 	OriginalURL string `json:"originalUrl"`
 	Alias       string `json:"alias"`
+}
+
+var secretKey = []byte("secret-key")
+
+func generateToken(username string) (string, error) {
+	claims := jwt.NewWithClaims(jwt.SigningMethodES256, jwt.MapClaims{
+		"sub": username,
+		"iss": "chibi-url",
+		"aud": "user",
+		"exp": time.Now().Add(time.Hour).Unix(),
+		"iat": time.Now().Unix(),
+	})
+
+	token, err := claims.SignedString(secretKey)
+	if err != nil {
+		return "", err
+	}
+
+	return token, nil
+}
+
+func verifyToken(tokenString string) error {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		return secretKey, nil
+	})
+
+	if err != nil {
+		return err
+	}
+
+	if !token.Valid {
+		return fmt.Errorf("invalid token")
+	}
+
+	return nil
 }
 
 func main() {
@@ -58,6 +101,13 @@ func main() {
 			return
 		}
 	})
+
+	// mux.HandleFunc("POST /register", func(w http.ResponseWriter, r *http.Request)){
+	// 	var input RegisterInput
+
+	// 	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
+	// 		http.Error(w, "Invalid reuuest body", http)
+	// 	}
 
 	mux.HandleFunc("POST /shorten", func(w http.ResponseWriter, r *http.Request) {
 		var input URLInput
