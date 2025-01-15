@@ -13,6 +13,7 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	_ "github.com/lib/pq"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
@@ -39,6 +40,14 @@ type URLInput struct {
 }
 
 var secretKey = []byte("secret-key")
+
+func hashPassword(password string) (string, error) {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return "", err
+	}
+	return string(hashedPassword), nil
+}
 
 func generateToken(username string) (string, error) {
 	claims := jwt.NewWithClaims(jwt.SigningMethodES256, jwt.MapClaims{
@@ -102,12 +111,35 @@ func main() {
 		}
 	})
 
-	// mux.HandleFunc("POST /register", func(w http.ResponseWriter, r *http.Request)){
-	// 	var input RegisterInput
+	mux.HandleFunc("POST /register", func(w http.ResponseWriter, r *http.Request) {
+		var input RegisterInput
 
-	// 	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
-	// 		http.Error(w, "Invalid reuuest body", http)
-	// 	}
+		if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
+			http.Error(w, "Invalid reuuest body", http.StatusBadRequest)
+
+			if input.Email == "" || input.Password == "" {
+				http.Error(w, "Missing required fields", http.StatusBadRequest)
+				return
+			}
+
+			hashedPassword, err := hashPassword(input.Password)
+
+			if err != nil {
+				http.Error(w, "Registration failed", http.StatusBadRequest)
+			}
+			query := `INSERT INTO users (email, password) VALUES ($1, $2)`
+			if err := db.QueryRow(query, input.Email, hashedPassword).Err(); err != nil {
+				http.Error(w, "Registration failed", http.StatusInternalServerError)
+				return
+			}
+
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusCreated)
+			json.NewEncoder(w).Encode(map[string]string{
+				"message": "User registered successfully",
+			})
+		}
+	})
 
 	mux.HandleFunc("POST /shorten", func(w http.ResponseWriter, r *http.Request) {
 		var input URLInput
