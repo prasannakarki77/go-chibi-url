@@ -9,7 +9,7 @@ import (
 
 	_ "github.com/joho/godotenv/autoload"
 
-	"go-chibi-url/internal/database"
+	"react-go/internal/database"
 )
 
 type Server struct {

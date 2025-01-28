@@ -9,7 +9,7 @@ import (
 	"syscall"
 	"time"
 
-	"go-chibi-url/internal/server"
+	"react-go/internal/server"
 )
 
 func gracefulShutdown(apiServer *http.Server, done chan bool) {
