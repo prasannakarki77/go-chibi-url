@@ -12,7 +12,7 @@ function App() {
   // };
 
   return (
-    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 bg-base-300">
+    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 bg-base-100">
       {/* <div className="max-w-md mx-auto space-y-8">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
