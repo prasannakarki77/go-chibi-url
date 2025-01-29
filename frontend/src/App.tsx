@@ -1,19 +1,19 @@
-import { useState } from "react";
-
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Login from "./components/Login";
 function App() {
-  const [count, setCount] = useState(0);
-  const [message, setMessage] = useState<string>("");
+  // const [count, setCount] = useState(0);
+  // const [message, setMessage] = useState<string>("");
 
-  const fetchData = () => {
-    fetch(`http://localhost:${import.meta.env.VITE_PORT}/`)
-      .then((response) => response.text())
-      .then((data) => setMessage(data))
-      .catch((error) => console.error("Error fetching data:", error));
-  };
+  // const fetchData = () => {
+  //   fetch(`http://localhost:${import.meta.env.VITE_PORT}/`)
+  //     .then((response) => response.text())
+  //     .then((data) => setMessage(data))
+  //     .catch((error) => console.error("Error fetching data:", error));
+  // };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md mx-auto space-y-8">
+    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 bg-base-300">
+      {/* <div className="max-w-md mx-auto space-y-8">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
             Welcome to Vite + Reactczcx
@@ -52,7 +52,21 @@ function App() {
         <div className="text-center text-gray-500 text-sm">
           Built with Vite, React, and Tailwind CSS
         </div>
-      </div>
+
+        <button className="btn">Button</button>
+        <button className="btn btn-neutral">Neutral</button>
+        <button className="btn btn-primary">Primary</button>
+        <button className="btn btn-secondary">Secondary</button>
+        <button className="btn btn-accent">Accent</button>
+        <button className="btn btn-ghost">Ghost</button>
+        <button className="btn btn-link">Link</button>
+      </div> */}
+
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
