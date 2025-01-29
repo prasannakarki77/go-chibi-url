@@ -2,7 +2,10 @@ const Login = () => {
   return (
     <div className="card bg-base-200 w-96 shadow-xl mx-auto">
       <div className="card-body  ">
-        <h4 className=" text-lg font-bold ">Sign up to chibi Url</h4>
+        <div className="flex justify-between">
+          <h4 className=" text-lg font-bold ">Sign up to chibi Url</h4>
+          <img src="/icon.svg" height={30} width={30} />
+        </div>
         <div className="divider mb-2 mt-0"></div>
 
         <div className=" space-y-4">
