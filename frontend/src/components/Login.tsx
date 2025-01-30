@@ -3,13 +3,13 @@ const Login = () => {
     <div className="card bg-base-200 w-96 shadow-xl mx-auto">
       <div className="card-body  ">
         <div className="flex justify-between">
-          <h4 className=" text-lg font-bold ">Sign up to chibi Url</h4>
+          <h2 className=" text-xl font-bold ">Sign up to chibi Url</h2>
           <img src="/icon.svg" height={30} width={30} />
         </div>
         <div className="divider mb-2 mt-0"></div>
 
         <div className=" space-y-4">
-          <label className="input input-bordered input-sm flex items-center gap-2">
+          <label className="input input-bordered  flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -19,9 +19,13 @@ const Login = () => {
               <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
               <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
             </svg>
-            <input type="text" className="grow text-sm " placeholder="Email" />
+            <input
+              type="email"
+              className="grow "
+              placeholder="Enter your email"
+            />
           </label>
-          <label className="input input-bordered input-sm flex items-center gap-2">
+          <label className="input input-bordered  flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -34,16 +38,18 @@ const Login = () => {
                 clipRule="evenodd"
               />
             </svg>
-            <input type="password" className="grow text-sm" value="password" />
+            <input
+              type="password"
+              className="grow "
+              placeholder="Enter password"
+            />
           </label>
 
-          <button className="btn btn-primary  text-xs btn-sm w-full">
-            Login
-          </button>
+          <button className="btn btn-primary   w-full">Login</button>
         </div>
         <div className="divider text-xs">OR</div>
         <div className=" grid grid-cols-2 gap-4">
-          <button className="btn btn-neutral  text-xs btn-sm">
+          <button className="btn btn-neutral  text-xs btn-md">
             <svg
               width="15"
               height="15"
@@ -70,7 +76,7 @@ const Login = () => {
             </svg>
             Google
           </button>
-          <button className="btn btn-neutral  text-xs btn-sm">
+          <button className="btn btn-neutral  text-xs btn-md">
             <svg
               viewBox="0 0 256 250"
               width="15"
